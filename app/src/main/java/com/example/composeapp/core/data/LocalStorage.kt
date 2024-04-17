@@ -15,7 +15,7 @@ class LocalStorage(private val context: Context)  {
     }
 
 //    var loginResponse: LoginResponse?
-//        get() {
+//        com.example.composeapp.core.extensions.get() {
 //            val json = pref.getString(AppKeys.LOGIN_RESPONSE, null)
 //            return gson.fromJson(json, LoginResponse::class.java)
 //        }
@@ -25,7 +25,7 @@ class LocalStorage(private val context: Context)  {
 //        }
 //
 //    var currentProfile: Profile?
-//        get() {
+//        com.example.composeapp.core.extensions.get() {
 //            val json = pref.getString(AppKeys.CURRENT_PROFILE, null)
 //            return gson.fromJson(json, Profile::class.java)
 //        }
@@ -35,7 +35,7 @@ class LocalStorage(private val context: Context)  {
 //        }
 //
 //    var dontAskAgainChooseProfile: Boolean
-//        get() {
+//        com.example.composeapp.core.extensions.get() {
 //            return pref.getBoolean(AppKeys.DO_NOT_ASK_AGAIN, false)
 //        }
 //        set(value) {
@@ -43,14 +43,14 @@ class LocalStorage(private val context: Context)  {
 //        }
 //
 //    var megogoAccessToken: String
-//        get() {
+//        com.example.composeapp.core.extensions.get() {
 //            return pref.getString(AppKeys.MEGOGO_ACCESS_TOKEN, "") ?: ""
 //        }
 //        set(value) {
 //            pref.edit().putString(AppKeys.MEGOGO_ACCESS_TOKEN, value).apply()
 //        }
 //    var favouritesGenres: FavouritedGenres?
-//        get() {
+//        com.example.composeapp.core.extensions.get() {
 //            val json = pref.getString(AppKeys.FAVOURITE_GENRES, null)
 //            return gson.fromJson(json, FavouritedGenres::class.java)
 //        }
@@ -60,7 +60,7 @@ class LocalStorage(private val context: Context)  {
 //        }
 //
 //    var lastSearchedMovies: LastSearchedMovies?
-//        get() {
+//        com.example.composeapp.core.extensions.get() {
 //            val json = pref.getString(AppKeys.LAST_SEARCHED_MOVIES, null)
 //            return gson.fromJson(json, LastSearchedMovies::class.java)
 //        }
@@ -70,7 +70,7 @@ class LocalStorage(private val context: Context)  {
 //        }
 //
 //    var customerProfile: CustomerProfile?
-//        get() {
+//        com.example.composeapp.core.extensions.get() {
 //            val json = pref.getString(AppKeys.CUSTOMER_PROFILE, null)
 //            return gson.fromJson(json, CustomerProfile::class.java)
 //        }

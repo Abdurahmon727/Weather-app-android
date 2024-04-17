@@ -21,7 +21,7 @@ class HomeRepositoryImply(private val api: HomeApi = RetrofitInstance.homeApi) :
     }
 
     override suspend fun getForeCast(cityId: String): Either<ForecastResponse> = try {
-        val response = api.getForecastForWeek(cityId = cityId)
+        val response = api.getForecastForWeek(cityId = "id:$cityId")
         Either.Right(response.body()!!)
     } catch (e: Exception) {
         Either.Left(Message(e.message ?: "unexpected error"))

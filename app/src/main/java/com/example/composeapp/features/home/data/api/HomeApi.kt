@@ -18,6 +18,6 @@ interface HomeApi {
     @GET("forecast.json")
     suspend fun getForecastForWeek(
         @Query("key") key: String = AppConstants.APIKEY,
-        @Query("q=id:") cityId: String,
+        @Query("q") cityId: String,
     ): Response<ForecastResponse>
 }
