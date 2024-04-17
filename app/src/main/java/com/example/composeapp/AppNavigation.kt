@@ -1,3 +1,5 @@
+package com.example.composeapp
+
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,8 +15,8 @@ fun AppNavigation(
     LocalNavHostControllerProvider(
         navHostController = navController,
     ) {
-        NavHost(navController = navController, startDestination = AppRoutes.home) {
-            composable(AppRoutes.home) {
+        NavHost(navController = navController, startDestination = AppRoutes.HOME) {
+            composable(AppRoutes.HOME) {
                 HomePage(
                     viewModel = HomeViewModel()
                 )
@@ -25,5 +27,5 @@ fun AppNavigation(
 
 
 object AppRoutes {
-    const val home = "/home"
+    const val HOME = "/home"
 }
