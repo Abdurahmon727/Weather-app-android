@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: HomeRepository = HomeRepositoryImply()) :
     ViewModel() {
-    val uiState = MutableStateFlow("")
+    val uiState = MutableStateFlow(HomeUiState())
 
     init {
         getCities(q = "Tash")
@@ -28,9 +28,10 @@ class HomeViewModel(private val repository: HomeRepository = HomeRepositoryImply
     private fun getCities(q: String) {
         viewModelScope.launch {
             Log.i("viewModelScope", "inside")
-            val response = repository.getCities("Tash")
+            val response = repository.getCities(query = q)
             Log.i("viewModelScope", "isRight ${response is Either.Right}")
             Log.i("viewModelScope", "get result: $response")
+
         }
     }
 }
