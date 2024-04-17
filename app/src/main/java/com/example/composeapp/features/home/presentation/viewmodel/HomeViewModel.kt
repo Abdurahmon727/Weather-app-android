@@ -1,6 +1,6 @@
 package com.example.composeapp.features.home.presentation.viewmodel
 
-import android.util.Log
+import AppConstants
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composeapp.core.domain.Either
@@ -20,7 +20,6 @@ class HomeViewModel(private val repository: HomeRepository = HomeRepositoryImply
         when (event) {
             is HomeEvent.GetCities -> getCities(event.query)
             is HomeEvent.GetForecast -> getForecast()
-
         }
     }
 
@@ -33,7 +32,7 @@ class HomeViewModel(private val repository: HomeRepository = HomeRepositoryImply
     private fun getForecast() {
         uiState.update { it.copy(status = UiStatus.Loading) }
         viewModelScope.launch {
-            val result = repository.getForeCast("2683814")
+            val result = repository.getForeCast(AppConstants.tashkentId)
             if (result is Either.Right) {
                 uiState.update {
                     it.copy(

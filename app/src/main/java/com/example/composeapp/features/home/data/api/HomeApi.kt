@@ -19,5 +19,6 @@ interface HomeApi {
     suspend fun getForecastForWeek(
         @Query("key") key: String = AppConstants.APIKEY,
         @Query("q") cityId: String,
+        @Query("days") days:Int=7,
     ): Response<ForecastResponse>
 }

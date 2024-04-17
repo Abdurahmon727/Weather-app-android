@@ -33,9 +33,9 @@ data class Hour(
     @SerializedName("is_day")
     val isDay: Int,
     @SerializedName("precip_in")
-    val precipIn: Int,
+    val precipIn: Double,
     @SerializedName("precip_mm")
-    val precipMm: Int,
+    val precipMm: Double,
     @SerializedName("pressure_in")
     val pressureIn: Double,
     @SerializedName("pressure_mb")
@@ -53,7 +53,7 @@ data class Hour(
     @SerializedName("uv")
     val uv: Int,
     @SerializedName("vis_km")
-    val visKm: Int,
+    val visKm: Double,
     @SerializedName("vis_miles")
     val visMiles: Int,
     @SerializedName("will_it_rain")
