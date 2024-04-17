@@ -11,13 +11,13 @@ import retrofit2.http.Query
 interface HomeApi {
     @GET("search.json")
     suspend fun getCities(
-        @Query("key") key: String = AppConstants.apiKey,
+        @Query("key") key: String = AppConstants.APIKEY,
         @Query("q") query: String,
     ): Response<CitiesResponse>
 
     @GET("forecast.json")
     suspend fun getForecastForWeek(
-        @Query("key") key: String = AppConstants.apiKey,
+        @Query("key") key: String = AppConstants.APIKEY,
         @Query("q=id:") cityId: String,
     ): Response<ForecastResponse>
 }

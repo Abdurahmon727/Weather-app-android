@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composeapp.core.domain.Either
+import com.example.composeapp.core.domain.UiStatus
 import com.example.composeapp.features.home.data.repository.HomeRepository
 import com.example.composeapp.features.home.data.repository.HomeRepositoryImply
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,10 +16,16 @@ class HomeViewModel(private val repository: HomeRepository = HomeRepositoryImply
     val uiState = MutableStateFlow("")
 
     init {
-        onCall()
+        getCities(q = "Tash")
     }
 
-    private fun onCall() {
+    fun onEvent(event: HomeEvent) {
+        when (event) {
+            is HomeEvent.GetCities -> getCities(event.query)
+        }
+    }
+
+    private fun getCities(q: String) {
         viewModelScope.launch {
             Log.i("viewModelScope", "inside")
             val response = repository.getCities("Tash")
@@ -27,3 +34,13 @@ class HomeViewModel(private val repository: HomeRepository = HomeRepositoryImply
         }
     }
 }
+
+
+data class HomeUiState(
+    val status: UiStatus = UiStatus.Pure
+)
+
+sealed class HomeEvent {
+    data class GetCities(val query: String) : HomeEvent()
+}
+

@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.composeapp.features.home.presentation.pages.HomePage
-import com.example.composeapp.ui.theme.ComposeAppTheme
+import com.example.composeapp.core.theme.ComposeAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

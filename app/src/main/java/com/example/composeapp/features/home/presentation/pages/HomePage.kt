@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.example.composeapp.features.home.presentation.viewmodel.HomeViewModel
-import com.example.composeapp.ui.theme.ComposeAppTheme
+import com.example.composeapp.core.theme.ComposeAppTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
