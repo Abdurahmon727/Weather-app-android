@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.composeapp.core.extensions.H
+import com.example.composeapp.core.extensions.toDayName
 import com.example.composeapp.features.home.data.models.forecast.Forecastday
 
 
@@ -38,7 +39,7 @@ fun WeeklyReport(days: List<Forecastday>, onClick: (index: Int) -> Unit) {
                             onClick.invoke(index)
                         }
                         .background(Color.Green)
-                        .padding(vertical = 16.dp, horizontal = 6.dp)
+                        .padding(vertical = 10.dp, horizontal = 8.dp)
                         ,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -46,11 +47,11 @@ fun WeeklyReport(days: List<Forecastday>, onClick: (index: Int) -> Unit) {
                         text = "${item.day.avgtempC} \u2103",
                     )
                     AsyncImage(
-                        modifier = Modifier.size(50.dp),
+                        modifier = Modifier.size(70.dp),
                         model = "https:${item.day.condition.icon}",
                         contentDescription = ""
                     )
-                    Text(text = item.date)
+                    Text(text = item.date.toDayName())
                 }
             }
         }

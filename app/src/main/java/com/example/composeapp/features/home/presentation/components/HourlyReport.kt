@@ -2,6 +2,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -24,7 +25,11 @@ fun HourlyReport(
     title: String,
     hours: List<Hour>
 ) {
-    Column(horizontalAlignment = Alignment.Start) {
+    if (hours.isEmpty()) return
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.Start
+    ) {
         Text(text = title, modifier = Modifier.padding(start = 16.dp))
         6.H()
         LazyRow(
@@ -36,7 +41,7 @@ fun HourlyReport(
                     modifier = Modifier
                         .clip(RoundedCornerShape(12.dp))
                         .background(Color.Green)
-                        .padding(vertical = 16.dp, horizontal = 6.dp),
+                        .padding(vertical = 10.dp, horizontal = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(

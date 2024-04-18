@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -39,6 +38,7 @@ import com.example.composeapp.features.home.data.models.forecast.ForecastRespons
 import com.example.composeapp.features.home.presentation.components.WeeklyReport
 import com.example.composeapp.features.home.presentation.viewmodel.HomeEvent
 import com.example.composeapp.features.home.presentation.viewmodel.HomeViewModel
+import java.util.Calendar
 
 @Composable
 fun HomePage(
@@ -48,47 +48,44 @@ fun HomePage(
     val event = viewModel::onEvent
 
 
-    Scaffold {
-        PullToRefresh(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-            isRefreshing = uiState.status == UiStatus.Loading,
-            onRefresh = { event.invoke(HomeEvent.GetForecast) }
-        ) {
-            when (uiState.status) {
-                UiStatus.Pure ->
-                    event.invoke(HomeEvent.GetForecast)
+    PullToRefresh(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        isRefreshing = uiState.status == UiStatus.Loading,
+        onRefresh = { event.invoke(HomeEvent.GetForecast) }
+    ) {
+        when (uiState.status) {
+            UiStatus.Pure ->
+                event.invoke(HomeEvent.GetForecast)
 
-                UiStatus.Loading ->
-                    Box(
-                        Modifier
-                            .height(LocalConfiguration.current.screenHeightDp.dp)
-                            .width(LocalConfiguration.current.screenWidthDp.dp)
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center),
-                            strokeWidth = 2.dp
-                        )
-                    }
+            UiStatus.Loading ->
+                Box(
+                    Modifier
+                        .height(LocalConfiguration.current.screenHeightDp.dp)
+                        .width(LocalConfiguration.current.screenWidthDp.dp)
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center),
+                        strokeWidth = 2.dp
+                    )
+                }
 
-                UiStatus.Success -> SuccessContent(
-                    forecast = uiState.forecast!!
-                )
+            UiStatus.Success -> SuccessContent(
+                forecast = uiState.forecast!!
+            )
 
-                UiStatus.Failure ->
-                    Box(
-                        Modifier
-                            .height(LocalConfiguration.current.screenHeightDp.dp)
-                            .width(LocalConfiguration.current.screenWidthDp.dp)
-                    ) {
-                        Text(
-                            text = "Something went wrong, pull to refresh",
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-            }
+            UiStatus.Failure ->
+                Box(
+                    Modifier
+                        .height(LocalConfiguration.current.screenHeightDp.dp)
+                        .width(LocalConfiguration.current.screenWidthDp.dp)
+                ) {
+                    Text(
+                        text = "Something went wrong, pull to refresh",
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
         }
     }
 }
@@ -101,37 +98,75 @@ private fun SuccessContent(forecast: ForecastResponse) {
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        16.H()
+
         TextField(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             value = "", onValueChange = {},
         )
-        CustomNetworkImage(
-            Modifier.size(120.dp),
-            image = "https:${forecast.current.condition.icon}"
-        )
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = forecast.location.name,
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    fontSize = 30.sp, fontWeight = FontWeight.W600
-                ),
-            )
-            10.W()
-            Icon(painter = painterResource(id = R.drawable.location), contentDescription = "")
+
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 16.dp),
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "${forecast.current.tempC}\u00B0",
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontSize = 70.sp, fontWeight = FontWeight.W600
+                    ),
+                )
+                Text(
+                    text = forecast.current.condition.text,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontSize = 18.sp, fontWeight = FontWeight.W500
+                    ),
+                )
+                16.H()
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = forecast.location.name,
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            fontSize = 24.sp
+                        ),
+                    )
+                    4.W()
+                    Icon(
+                        painter = painterResource(id = R.drawable.location),
+                        contentDescription = ""
+                    )
+                }
+                Text(
+                    text = "Feels like ${forecast.current.feelslikeC}\u00B0",
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontSize = 14.sp
+                    ),
+                )
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                CustomNetworkImage(
+                    Modifier.size((LocalConfiguration.current.screenWidthDp.dp - 32.dp) / 2),
+                    image = "https:${forecast.current.condition.icon}"
+                )
+            }
         }
-        6.H()
-        Text(
-            text = "${forecast.current.tempC} \u2103",
-            style = MaterialTheme.typography.bodyLarge.copy(
-                fontSize = 70.sp, fontWeight = FontWeight.W600
-            ),
-        )
-        6.H()
+
+
+
+
+
+
+        16.H()
         HourlyReport(
             title = "Today Hourly Report",
-            hours = forecast.forecast.forecastday.first().hour
+            hours = forecast.forecast.forecastday.first().hour.filter { hourModel ->
+                val timeStr = hourModel.time.split(" ")[1]
+                val (hour, _) = timeStr.split(":").map { it.toInt() }
+                val timeCalendar = Calendar.getInstance()
+                return@filter hour >= timeCalendar.get(Calendar.HOUR_OF_DAY)
+            }
         )
         6.H()
         WeeklyReport(
