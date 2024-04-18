@@ -1,5 +1,6 @@
 package com.example.composeapp.features.home.presentation.pages
 
+import HourlyReport
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -79,6 +82,7 @@ fun HomePage(
 
 @Composable
 private fun SuccessContent(forecast: ForecastResponse) {
+    val selectedDayIndex = remember { mutableIntStateOf(0) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -86,7 +90,9 @@ private fun SuccessContent(forecast: ForecastResponse) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TextField(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             value = "", onValueChange = {},
         )
         CustomNetworkImage(
@@ -111,9 +117,21 @@ private fun SuccessContent(forecast: ForecastResponse) {
             ),
         )
         6.H()
-
-        WeeklyReport(days = forecast.forecast.forecastday)
-
-
+        HourlyReport(
+            title = "Today Hourly Report",
+            hours = forecast.forecast.forecastday.first().hour
+        )
+        6.H()
+        WeeklyReport(
+            days = forecast.forecast.forecastday,
+            onClick = { index ->
+                selectedDayIndex.intValue = index
+            },
+        )
+        6.H()
+        HourlyReport(
+            title = "${forecast.forecast.forecastday[selectedDayIndex.intValue].date} Hourly Report",
+            hours = forecast.forecast.forecastday[selectedDayIndex.intValue].hour
+        )
     }
 }

@@ -1,13 +1,14 @@
 package com.example.composeapp.features.home.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +23,7 @@ import com.example.composeapp.features.home.data.models.forecast.Forecastday
 
 
 @Composable
-fun WeeklyReport(days: List<Forecastday>) {
+fun WeeklyReport(days: List<Forecastday>, onClick: (index: Int) -> Unit) {
     Column(horizontalAlignment = Alignment.Start) {
         Text(text = "Weekly report", modifier = Modifier.padding(start = 16.dp))
         6.H()
@@ -30,12 +31,15 @@ fun WeeklyReport(days: List<Forecastday>) {
             contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            items(days) { item ->
+            itemsIndexed(days) { index, item ->
                 Column(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(RoundedCornerShape(12.dp)).clickable {
+                            onClick.invoke(index)
+                        }
                         .background(Color.Green)
-                        .padding(vertical = 16.dp, horizontal = 6.dp),
+                        .padding(vertical = 16.dp, horizontal = 6.dp)
+                        ,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
@@ -47,7 +51,6 @@ fun WeeklyReport(days: List<Forecastday>) {
                         contentDescription = ""
                     )
                     Text(text = item.date)
-
                 }
             }
         }
