@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composeapp.core.composables.LocalNavHostControllerProvider
 import com.example.composeapp.features.home.presentation.pages.HomePage
+import com.example.composeapp.features.home.presentation.pages.SelectCityPage
 import com.example.composeapp.features.home.presentation.viewmodel.HomeViewModel
 
 @Composable
@@ -21,6 +22,9 @@ fun AppNavigation(
                     viewModel = HomeViewModel()
                 )
             }
+            composable(AppRoutes.CITY) {
+                SelectCityPage()
+            }
         }
     }
 }
@@ -28,4 +32,5 @@ fun AppNavigation(
 
 object AppRoutes {
     const val HOME = "/home"
+    const val CITY = "/city"
 }

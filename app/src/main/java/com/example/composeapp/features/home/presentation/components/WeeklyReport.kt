@@ -44,7 +44,7 @@ fun WeeklyReport(days: List<Forecastday>, onClick: (index: Int) -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "${item.day.avgtempC} \u2103",
+                        text = "${item.day.avgtempC}\u00B0",
                     )
                     AsyncImage(
                         modifier = Modifier.size(70.dp),

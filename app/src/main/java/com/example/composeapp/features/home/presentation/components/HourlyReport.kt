@@ -45,7 +45,7 @@ fun HourlyReport(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "${item.tempC} \u2103",
+                        text = "${item.tempC}\u00B0",
                     )
                     AsyncImage(
                         modifier = Modifier.size(50.dp),

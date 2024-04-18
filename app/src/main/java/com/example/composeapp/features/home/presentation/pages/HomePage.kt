@@ -3,6 +3,7 @@ package com.example.composeapp.features.home.presentation.pages
 import HourlyReport
 import PullToRefresh
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
+import com.example.composeapp.AppRoutes
 import com.example.composeapp.R
 import com.example.composeapp.core.composables.CustomNetworkImage
 import com.example.composeapp.core.domain.UiStatus
@@ -93,18 +96,22 @@ fun HomePage(
 @Composable
 private fun SuccessContent(forecast: ForecastResponse) {
     val selectedDayIndex = remember { mutableIntStateOf(0) }
+    val navController = rememberNavController()
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         16.H()
-
         TextField(
+            enabled = false,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            value = "", onValueChange = {},
+                .padding(horizontal = 16.dp)
+                .clickable {
+                    navController.navigate(AppRoutes.CITY)
+                },
+            value = "City", onValueChange = {},
         )
 
         Row(
